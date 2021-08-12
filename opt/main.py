@@ -1,11 +1,16 @@
 import requests
 import json as JSON
+import json
+import statistics
 
 URL = "https://raw.githubusercontent.com/IUI-Lab/MATRICS-Corpus/master/utterance/BP-S1.txt"
 
 
 def main():
-    print(create_json(get_url_data()))
+    json_data = create_json(get_url_data())
+    list_data = json.loads(json_data)
+    del list_data[0]  # delete first line
+    print(calc_ave_of_start_end(list_data))
     return 0
 
 
@@ -45,6 +50,24 @@ def create_json(dict_data):
 
     # use data or json
     return JSON.dumps(data, ensure_ascii=False)
+
+
+# Calculate the average of start and end(-1)
+def calc_ave_of_start_end(data):
+    calc_result = []
+    start_list = []
+    end_list = []
+    for i in data:
+        start_list.append(float(i["start"]))
+        end_list.append(float(i["end"]))
+    for i in range(len(start_list)):
+        calc_result.append(start_list[i+1] - end_list[i])
+        if i == len(start_list) - 2:
+            break
+    # print(calc_result)
+    ave = statistics.mean(calc_result)
+
+    return ave
 
 
 if __name__ == "__main__":
