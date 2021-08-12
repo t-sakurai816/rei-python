@@ -5,18 +5,23 @@ URL = "https://raw.githubusercontent.com/IUI-Lab/MATRICS-Corpus/master/utterance
 
 
 def main():
-    data = get_url_data()
-    # print(data)
+    print(create_json(get_url_data()))
     return 0
 
 
-# URLからデータを取得する
+# get data from URL
 def get_url_data():
     result = requests.get(URL)
+    data = result.text
+    return data
+
+
+# create json from dict_data
+def create_json(dict_data):
     data = []
     json = {}
-    # list de kakomanaito object ga detekuru
-    lines = list(map(lambda x: x.split("\t"),result.text.splitlines()))
+    # convert from object to list
+    lines = list(map(lambda x: x.split("\t"), dict_data.splitlines()))
 
     # properties = ["ID", "start", "end", "transcription"]
     properties = lines[0]
@@ -34,13 +39,13 @@ def get_url_data():
         }
         """
         data.append(text)
-    
+
     for index, value in enumerate(data):
         json[index] = value
 
     # use data or json
     return JSON.dumps(data, ensure_ascii=False)
-    #return JSON.dumps(data, ensure_ascii=False)
+
 
 if __name__ == "__main__":
     main()
