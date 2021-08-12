@@ -1,4 +1,5 @@
 import requests
+import json as JSON
 
 URL = "https://raw.githubusercontent.com/IUI-Lab/MATRICS-Corpus/master/utterance/BP-S1.txt"
 
@@ -38,8 +39,8 @@ def get_url_data():
         json[index] = value
 
     # use data or json
-    return data
-    #return json
+    return JSON.dumps(data, ensure_ascii=False)
+    #return JSON.dumps(data, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()
