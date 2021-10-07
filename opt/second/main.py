@@ -10,7 +10,7 @@ def main():
     list_data = JSON.loads(json)
     del list_data[0]
     # print(list_data[1][" AU01_c"])
-    print("AU01_c's ave top of 30", calc_ave(list_data, " AU01_c"))
+    print("AU01_c's ave top of 30", calc_ave(list_data, " AU01_c", 0, 30))
 
     return 0
 
@@ -52,16 +52,13 @@ def create_json(file_data):
     return JSON.dumps(data, ensure_ascii=False)
 
 
-def calc_ave(list_data, key):
+def calc_ave(list_data, key, start, end):
     count = 0
     num_list = list()
-    for i in list_data:
+    for i in list_data[start: end]:
         # print(i[key])
         num_list.append(i[key])
         count += 1
-
-        if (count == WINDOW_SIZE):
-            break
 
     num_list_int = list(map(int, num_list))
     ave = sum(num_list_int) / len(num_list_int)
