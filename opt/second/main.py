@@ -12,14 +12,17 @@ def main():
     del list_data[0]
     result = list()
 
-    for i in range((int(len(list_data)/30))):
+    for i in range((int(len(list_data)))):
         if (i == 0):
             result.append(calc_ave(list_data, KEY, i, WINDOW_SIZE))
         else:
-            result.append(calc_ave(list_data, KEY, i+3, WINDOW_SIZE + 3))
+            try:
+                result.append(
+                    calc_ave(list_data, KEY, i+3, WINDOW_SIZE * i + 3))
+            except:
+                pass
 
-    for i in result:
-        print(KEY, i)
+    print(KEY+":", result)
 
     return 0
 
