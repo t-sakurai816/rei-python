@@ -2,6 +2,7 @@ import json as JSON
 
 FILE = 'BP-S1-A-0.txt'
 WINDOW_SIZE = 30
+KEY = " AU01_c"
 
 
 def main():
@@ -9,8 +10,16 @@ def main():
     json = create_json(data)
     list_data = JSON.loads(json)
     del list_data[0]
-    # print(list_data[1][" AU01_c"])
-    print("AU01_c's ave top of 30", calc_ave(list_data, " AU01_c", 0, 30))
+    result = list()
+
+    for i in range((int(len(list_data)/30))):
+        if (i == 0):
+            result.append(calc_ave(list_data, KEY, i, WINDOW_SIZE))
+        else:
+            result.append(calc_ave(list_data, KEY, i+3, WINDOW_SIZE + 3))
+
+    for i in result:
+        print(KEY, i)
 
     return 0
 
